@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.palauro.ecommerce.dto.ProductDTO;
 import com.palauro.ecommerce.model.Category;
 import com.palauro.ecommerce.model.Product;
@@ -23,6 +22,8 @@ import com.palauro.ecommerce.service.ProductService;
 
 @Controller
 public class AdmimController {
+
+    public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productImages";
 
     @Autowired
     CategoryService categoryService;
@@ -88,8 +89,8 @@ public class AdmimController {
 
     @PostMapping("/admin/products/add")
     public String productAddPost(@ModelAttribute("productDTO") ProductDTO productDTO,
-                                 @RequestParam("productImage") MultipartFile file,
-                                 @RequestParam("imgName") String imgName) throws IOException {
+            @RequestParam("productImage") MultipartFile file,
+            @RequestParam("imgName") String imgName) throws IOException {
 
         Product product = new Product();
         product.setId(productDTO.getId());
@@ -99,14 +100,15 @@ public class AdmimController {
         product.setWeight(productDTO.getWeight());
         product.setDescription(productDTO.getDescription());
         String imageUUID;
-        if(!file.isEmpty()){
-            imageUUID =  file.getOriginalFilename();
+
+        if (!file.isEmpty()) {
+            imageUUID = file.getOriginalFilename();
             Path fileNameAndPAth = Paths.get(uploadDir, imageUUID);
             Files.write(fileNameAndPAth, file.getBytes());
-        } else{
+        } else {
             imageUUID = imgName;
-            
         }
+
         product.setImageName(imageUUID);
         productService.addProduct(product);
 

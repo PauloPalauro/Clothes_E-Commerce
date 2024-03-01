@@ -1,5 +1,6 @@
 package com.palauro.ecommerce.Configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,53 +8,63 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import com.palauro.ecommerce.service.CustomUserDetailService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfiguration {
 
-    @SuppressWarnings("deprecation")
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorize ->
-                        authorize
-                                .antMatchers("/", "/shop/**", "/register", "/h2-console/**").permitAll()
-                                .antMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
-                )
-                .formLogin(form ->
-                        form
-                                .loginPage("/login")
-                                .permitAll()
-                                .failureUrl("/login?error=true")
-                                .defaultSuccessUrl("/")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                )
-                .oauth2Login(oauth2 ->
-                        oauth2
-                                .loginPage("/login")
-                                .successHandler(googleOAuth2SuccessHandler())
-                )
-                .logout(logout ->
-                        logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .logoutSuccessUrl("/login")
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
-                                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
-                )
-                .exceptionHandling(withDefaults())
-                .csrf(csrf -> csrf.disable());
+    @Autowired
+    GoogleOauth2SuccessHandler googleOauth2SuccessHandler;
 
-        http.headers().frameOptions().disable();
+    @Autowired
+    CustomUserDetailService customUserDetailService;
+
+    @Bean
+    public SecurityFilterChain filterchain(HttpSecurity http) throws Exception{
+        
+        http
+            .authorizeHttpRequests((authz) -> 
+                authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**")
+                .permitAll()
+                .requestMatchers("/admin/**")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+            )
+
+            .formLogin(formlogin -> formlogin
+                .loginPage("/login")
+                .permitAll()
+                .failureUrl("/login?error= true")
+                .defaultSuccessUrl("/")
+                .usernameParameter("email")
+                .passwordParameter("password")
+            )
+
+            .oauth2Login(oauth2Login -> oauth2Login
+                .loginPage("/login")
+                .successHandler(googleOauth2SuccessHandler))
+
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"))
+            
+            .csrf(csrf -> csrf
+                .disable()
+            );
+        
+        http
+            .headers(headers -> headers
+            .frameOptions(frameoptions -> frameoptions.disable())
+        );
+
+        return http.build();
     }
 
     @Bean
@@ -61,23 +72,16 @@ public class SecurityConfig extends WebSecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService());
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(customUserDetailService);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
+    public void configure(WebSecurity web) throws Exception{
+        web.ignoring().requestMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**" ,"/js/**");
     }
 
-    @Bean
-    public CustomUserDetailsService customUserDetailsService() {
-        return new CustomUserDetailsService();
-    }
+    
 
-    @Bean
-    public AuthenticationSuccessHandler googleOAuth2SuccessHandler() {
-        return new GoogleOAuth2SuccessHandler();
-    }
+
+
 }

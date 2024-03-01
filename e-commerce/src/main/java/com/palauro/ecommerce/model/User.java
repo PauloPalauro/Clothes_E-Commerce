@@ -39,7 +39,7 @@ public class User {
     private String email;
 
 
-    @NotEmpty
+  
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

@@ -72,7 +72,6 @@ public class AdmimController {
     }
 
     // Product Section
-
     @GetMapping("/admin/products")
     public String products(Model model) {
         model.addAttribute("products", productService.getAllProducts());
@@ -134,6 +133,4 @@ public class AdmimController {
         model.addAttribute("productDTO", productDTO);
         return "productsAdd";
     }
-
-
 }

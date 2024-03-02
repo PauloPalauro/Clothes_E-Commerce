@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.palauro.ecommerce.global.GlobalData;
 import com.palauro.ecommerce.model.Role;
 import com.palauro.ecommerce.model.User;
 import com.palauro.ecommerce.repository.RoleRepository;
@@ -32,6 +33,7 @@ public class LoginController{
 
     @GetMapping("/login")
     public String login(){
+        GlobalData.cart.clear();
         return "login";
     }
 

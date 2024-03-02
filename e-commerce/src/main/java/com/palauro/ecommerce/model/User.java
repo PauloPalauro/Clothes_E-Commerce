@@ -38,8 +38,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-
-  
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -48,6 +46,7 @@ public class User {
         joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name ="ROLE_ID", referencedColumnName = "ID")}
     )
+    
     private List<Role> roles;
 
     public User(User user){

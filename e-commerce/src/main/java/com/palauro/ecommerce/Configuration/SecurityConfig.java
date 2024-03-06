@@ -1,84 +1,80 @@
-package com.palauro.ecommerce.Configuration;
+    package com.palauro.ecommerce.Configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import com.palauro.ecommerce.service.CustomUserDetailService;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+    import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+    import org.springframework.security.config.annotation.web.builders.WebSecurity;
+    import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+    import org.springframework.security.web.SecurityFilterChain;
+    import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+    import com.palauro.ecommerce.service.CustomUserDetailService;
 
-@Configuration
-public class SecurityConfig {
+    @Configuration
+    public class SecurityConfig {
 
-    @Autowired
-    GoogleOauth2SuccessHandler googleOauth2SuccessHandler;
+        @Autowired
+        GoogleOauth2SuccessHandler googleOauth2SuccessHandler;
 
-    @Autowired
-    CustomUserDetailService customUserDetailService;
+        @Autowired
+        CustomUserDetailService customUserDetailService;
 
-    @Bean
-    public SecurityFilterChain filterchain(HttpSecurity http) throws Exception{
-        
-        http
-            .authorizeHttpRequests((authz) -> 
-                authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**")
-                .permitAll()
-                .requestMatchers("/admin/**")
-                .hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
-            )
-
-            .formLogin(formlogin -> formlogin
-                .loginPage("/login")
-                .permitAll()
-                .failureUrl("/login?error= true")
-                .defaultSuccessUrl("/")
-                .usernameParameter("email")
-                .passwordParameter("password")
-            )
-
-            .oauth2Login(oauth2Login -> oauth2Login
-                .loginPage("/login")
-                .successHandler(googleOauth2SuccessHandler))
-
-            .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID"))
+        @Bean
+        public SecurityFilterChain filterchain(HttpSecurity http) throws Exception{
             
-            .csrf(csrf -> csrf
-                .disable()
-            );
+            http
+                .authorizeHttpRequests((authz) -> 
+                    authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**")
+                    .permitAll()
+                    .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+                    .anyRequest()
+                    .authenticated()
+                )
+
+                .formLogin(formlogin -> formlogin
+                    .loginPage("/login")
+                    .permitAll()
+                    .failureUrl("/login?error= true")
+                    .defaultSuccessUrl("/",true)
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                )
+
+                .oauth2Login(oauth2Login -> oauth2Login
+                    .loginPage("/login")
+                    .successHandler(googleOauth2SuccessHandler))
+
+                .logout(logout -> logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID"))
+                
+            
+                .headers(headers -> headers
+                .frameOptions(frameoptions -> frameoptions.disable())
+                 );
+
+            return http.build();
+        }
+
+        @Bean
+        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
+
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+            auth.userDetailsService(customUserDetailService);
+        }
+
+        public void configure(WebSecurity web) throws Exception{
+            web.ignoring().requestMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**" ,"/js/**");
+        }
+
         
-        http
-            .headers(headers -> headers
-            .frameOptions(frameoptions -> frameoptions.disable())
-        );
 
-        return http.build();
+
+
     }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(customUserDetailService);
-    }
-
-    public void configure(WebSecurity web) throws Exception{
-        web.ignoring().requestMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**" ,"/js/**");
-    }
-
-    
-
-
-
-}

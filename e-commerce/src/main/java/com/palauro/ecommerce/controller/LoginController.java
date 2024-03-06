@@ -51,7 +51,7 @@ public class LoginController{
         user.setRoles(roles);
         userRepository.save(user);
         request.login(user.getEmail(), password);
-        return "redirect:/";
+        return "redirect:/index";
     }
 
 }

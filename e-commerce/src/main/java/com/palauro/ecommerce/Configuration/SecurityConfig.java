@@ -25,12 +25,9 @@
             
             http
                 .authorizeHttpRequests((authz) -> 
-                    authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**")
-                    .permitAll()
-                    .requestMatchers("/admin/**")
-                    .hasRole("ADMIN")
-                    .anyRequest()
-                    .authenticated()
+                    authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest().authenticated()
                 )
 
                 .formLogin(formlogin -> formlogin
@@ -52,7 +49,7 @@
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID"))
                 
-            
+                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                 .frameOptions(frameoptions -> frameoptions.disable())
                  );
@@ -72,9 +69,4 @@
         public void configure(WebSecurity web) throws Exception{
             web.ignoring().requestMatchers("/resources/**", "/static/**", "/images/**", "/productimages/**", "/css/**" ,"/js/**");
         }
-
-        
-
-
-
     }

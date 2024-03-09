@@ -9,7 +9,65 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Categorias</title>
+
+    <style>
+         body{
+            background-color: #0c0c0c;
+        }
+        a {
+            color: rgb(255, 255, 255); /* Define a cor do texto do link como branco */
+            text-decoration: none; 
+            font-weight: bold; /* Remove o sublinhado */
+         }
+        h1, h5, h4, p{
+            color: white; /* Define a cor do texto do link como branco */
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .card-body{
+            background-color: #3b3f52;
+        }
+        .nav-link {
+            display: flex; /* Ativa flexbox */
+            align-items:flex-end; /* Centraliza verticalmente */
+           
+            text-decoration: none; /* Remove o sublinhado */
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+         .nav-link img {
+            margin-right: 10px;
+            
+        }
+        .table .thead-light th{
+            background-color: #0c0c0c;
+            color: white;
+        }
+        .table{
+            color: white;
+        }
+
+
+        .jumbotron{
+            background-color: #3b3f52;
+        }
+        
+        .no-gutters>.col, .no-gutters>[class*=col-]{
+            background-color: #0c0c0c;
+        }
+        .list-group-item{
+            background-color: #0c0c0c;
+            border: 1px solid #0f33ff;
+        }
+        .bg-light {
+            background-color: #0c0c0c !important;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #0f33ff;
+            border-color: #001068;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
@@ -25,10 +83,10 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/admin}" href="#"><img th:src="@{/images/store.svg }" src="@{/images/store.svg}" alt="Ícone de carrinho" width="25" height="25"> Admin-Home</a>
+                    <a class="nav-link" th:href="@{/admin}" href="#" style="color: white;"><img th:src="@{/images/store.svg }" src="@{/images/store.svg}" alt="Ícone de carrinho" width="25" height="25"> Admin-Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/logout}" href="#"><img th:src="@{/images/exit.svg }" src="@{/images/exit.svg}" alt="Ícone de carrinho" width="25" height="25"> Sair</a>
+                    <a class="nav-link" th:href="@{/logout}" href="#" style="color: white;"><img th:src="@{/images/exit.svg }" src="@{/images/exit.svg}" alt="Ícone de carrinho" width="25" height="25"> Sair</a>
                 </li>
 
             </ul>

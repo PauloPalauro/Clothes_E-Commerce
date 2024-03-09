@@ -21,41 +21,40 @@ public class SecurityConfig {
     CustomUserDetailService customUserDetailService;
 
     @Bean
-        public SecurityFilterChain filterchain(HttpSecurity http) throws Exception{
-            
-            http
-                .authorizeHttpRequests((authz) -> 
-                    authz.requestMatchers("/", "/shop/**", "/register", "/h2-console/**", "/images/**").permitAll()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-                )
+    public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
+
+        http
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/", "/shop/**", "/register", "/h2-console/**", "/images/**",
+                                "/productImages/**", "/css/**")
+                        .permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
 
                 .formLogin(formlogin -> formlogin
-                    .loginPage("/login")
-                    .permitAll()
-                    .failureUrl("/login?error= true")
-                    .defaultSuccessUrl("/",true)
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                )
+                        .loginPage("/login")
+                        .permitAll()
+                        .failureUrl("/login?error= true")
+                        .defaultSuccessUrl("/", true)
+                        .usernameParameter("email")
+                        .passwordParameter("password"))
 
                 .oauth2Login(oauth2Login -> oauth2Login
-                    .loginPage("/login")
-                    .successHandler(googleOauth2SuccessHandler))
+                        .loginPage("/login")
+                        .successHandler(googleOauth2SuccessHandler))
 
                 .logout(logout -> logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID"))
-                
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"))
+
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
-                .frameOptions(frameoptions -> frameoptions.disable())
-                 );
+                        .frameOptions(frameoptions -> frameoptions.disable()));
 
-            return http.build();
-        }
+        return http.build();
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

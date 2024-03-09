@@ -39,7 +39,10 @@ public class CartController {
     public String checkout(Model model){
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice).sum());
         return "checkout";
-        
     }
 
+    @GetMapping("/warning")
+    public String warning() {
+        return "warning";
+    }
 }

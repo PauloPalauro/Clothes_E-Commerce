@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <title>Document</title>
   <link th:href="@{/css/main.css}" rel="stylesheet" />
+  <link rel="icon" href=../images/logo2.png type="image/x-icon">
+  <link rel="icon" href=../images/logo2.png type="image/x-icon">
+
 
   <style>
     /* Estilo para os links */
@@ -26,7 +29,7 @@
       font-weight: bold; /* Deixa o texto em negrito */
     }
 
-    .nav-link img {
+    .nav-link img, img {
       margin-right: 10px;
       margin-top:10px; /* Ajuste conforme necessário */
     }
@@ -37,7 +40,8 @@
 
 <div class="device-notification">
   <a class="device-notification--logo" href="#0">
-    <img src="assets/img/logo.png" alt="Global">
+    <img th:src="@{/images/logo.png }" src="/images/logo.png" alt="logo_1" width="25" height="25">
+    aaaaa
   </a>
 </div>
 
@@ -46,23 +50,25 @@
     <div id="viewport" class="l-viewport">
       <div class="l-wrapper">
         <header class="header">
-         <h1>AAAA</h1>
+          <a class="nav-link" th:href="@{/}" href="#">
+          <img th:src="@{/images/logo.png }" src="/images/logo.png" alt="" width="370" height="70">
+        </a>
           <button class="header--cta cta"></button>
-          <a class="nav-link" th:href="@{/}" href="#"><img th:src="@{/images/store.svg }" src="@{/images/store.svg}" alt="Ícone de carrinho" width="25" height="25" style="font-family: 'Courier New', Courier, monospace;"> Home</a>
+          <a class="nav-link" th:href="@{/}" href="#"><img th:src="@{/images/store.svg }" src="@{/images/store.svg}" alt="Home" width="25" height="25" style="font-family: 'Courier New', Courier, monospace;"> Home</a>
 
-          <a class="nav-link" th:href="@{/shop}" href="#"><img th:src="@{/images/shop.svg }" src="@{/images/shop.svg}" alt="Ícone de carrinho" width="25" height="25"> Loja    </a>
+          <a class="nav-link" th:href="@{/shop}" href="#"><img th:src="@{/images/shop.svg }" src="@{/images/shop.svg}" alt="Loja" width="25" height="25"> Loja    </a>
 
-          <a class="nav-link" th:href="@{/cart}" href="#" sec:authorize="isAuthenticated()"><img th:src="@{/images/cart.svg }" src="/images/cart.svg" alt="Ícone de carrinho" width="25" height="25">Carrinho:</a>
+          <a class="nav-link" th:href="@{/cart}" href="#" sec:authorize="isAuthenticated()"><img th:src="@{/images/cart.svg }" src="/images/cart.svg" alt="Carrinho" width="25" height="25">Carrinho:</a>
           <span class="nav-link" th:text="${cartCount}" sec:authorize="isAuthenticated()">0</span>
 
-          <a class="nav-link"  sec:authorize="!isAuthenticated()" th:href="@{/login}" href="#"><img th:src="@{/images/login.svg }" src="/images/login.svg" alt="Ícone de carrinho" width="25" height="25"> Login</a>
+          <a class="nav-link"  sec:authorize="!isAuthenticated()" th:href="@{/login}" href="#"><img th:src="@{/images/login.svg }" src="/images/login.svg" alt="Login" width="25" height="25"> Login</a>
 
           <a class="nav-link" sec:authorize="isAuthenticated()">
-            <img th:src="@{/images/user.svg}" src="@{/images/user.svg}" alt="Ícone de usuário" width="25" height="25">
+            <img th:src="@{/images/user.svg}" src="@{/images/user.svg}" alt="Usuário" width="25" height="25">
             <span th:text="${#strings.substringBefore(#authentication.name, '@')}"></span>
         </a>
 
-        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#"><img th:src="@{/images/exit.svg }" src="@{/images/exit.svg}" alt="Ícone de carrinho" width="25" height="25"> Sair</a>
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#"><img th:src="@{/images/exit.svg }" src="@{/images/exit.svg}" alt="Sair" width="25" height="25"> Sair</a>
           <div class="header--nav-toggle">
             <span></span>
           </div>
@@ -76,15 +82,11 @@
                 <button class="cta">
                   <a th:href="@{/shop}">
                     Acesse
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-                      <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-                        <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
-                      </g>
-                    </svg>
+                    
                   </a>
                   <span class="btn-background"></span>
                 </button>
-                <img th:src="@{/images/robot.png }" src="@{/images/robot.png}" alt="Ícone de carrinho" width="500" height="500" style="font-family: 'Courier New', Courier, monospace;">
+                <img th:src="@{/images/robot.png }" src="@{/images/robot.png}" alt="robot" width="500" height="500" style="font-family: 'Courier New', Courier, monospace;">
               </div>
               <div class="intro--options">
                 <a href="#">

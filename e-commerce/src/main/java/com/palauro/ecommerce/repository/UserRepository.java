@@ -4,9 +4,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.palauro.ecommerce.model.User;
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+/* 
+    Fornece métodos para acessar e manipular dados relacionados à entidade User.
+    Ele inclui um método para buscar um usuário pelo seu email, usando uma
+    consulta gerada automaticamente pelo Spring Data JPA
+ */
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findUserByEmail(String email);
-    
-    
+
 }

@@ -9,7 +9,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
           <link rel="icon" href=../images/logo2.png type="image/x-icon">
     
-    <title>Produtos</title>
+    <title>Produtos - PhotoPulse.inc</title>
     
     <style>
         body{
@@ -110,13 +110,20 @@
         </thead>
         <tbody>
 
+        <!-- Loop sobre os produtos -->    
         <tr th:each="product, iStat : ${products}">
+            <!-- Número do produto -->
             <th scope="row" th:text="${iStat.index + 1}">1</th>
+            <!-- Nome do produto -->
             <td th:text="${product.name}">Larry</td>
+            <!-- Nome da categoria do produto -->
             <td th:text="${product.category.name}">Larry</td>
+            <!-- Imagem do produto -->
             <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + product.imageName}}"></td>
 
+            <!-- Link para excluir o produto -->
             <td><a href="" th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Excluir</a></td>
+            <!-- Link para atualizar o produto -->
             <td><a href="" th:href="@{/admin/product/update/{id}(id=${product.id})}" class="btn btn-warning">Atualizar</a></td>
 
         </tr>

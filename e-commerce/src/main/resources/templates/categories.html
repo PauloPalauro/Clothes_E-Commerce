@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
           <link rel="icon" href=../images/logo2.png type="image/x-icon">
-    <title>Categorias</title>
+    <title>Categorias  - PhotoPulse.inc</title>
 
     <style>
          body{
@@ -109,11 +109,19 @@
         </thead>
         <tbody>
 
+        <!-- Loop sobre as categorias -->
         <tr th:each="category, iStat : ${categories}">
+
+            <!-- Exibe o número da categoria -->
             <th scope="row" th:text="${iStat.index + 1}">1</th>
+
+            <!-- Exibe o nome da categoria -->
             <td th:text="${category.name}">Larry</td>
 
+             <!-- Link para excluir a categoria -->
             <td><a href="" th:href="@{/admin/categories/delete/{id}(id=${category.id})}" class="btn btn-danger">Excluir</a></td>
+            
+            <!-- Link para atualizar a categoria -->
             <td><a href="" th:href="@{/admin/categories/update/{id}(id=${category.id})}" class="btn btn-warning">Atualizar</a></td>
 
         </tr>

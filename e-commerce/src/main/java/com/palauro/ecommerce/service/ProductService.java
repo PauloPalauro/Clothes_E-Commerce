@@ -33,7 +33,7 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsByCategoryId(int id){
-        return productRepository.findAllByCategory_Id(id);
+        return productRepository.findAllByCategory_Id(id); //Este trecho de código chama o método findAllByCategory_Id() do ProductRepository, que foi definido anteriormente. Este método é fornecido pelo Spring Data JPA e é usado para buscar todos os produtos associados a uma determinada categoria com base no ID da categoria fornecido.
     }
 
 

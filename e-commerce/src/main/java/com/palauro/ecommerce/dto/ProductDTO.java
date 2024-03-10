@@ -1,6 +1,5 @@
 package com.palauro.ecommerce.dto;
 
-
 import lombok.Data;
 
 @Data

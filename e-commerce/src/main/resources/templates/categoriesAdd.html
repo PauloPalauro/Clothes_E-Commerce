@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
           <link rel="icon" href=../images/logo2.png type="image/x-icon">
-    <title>Adicionar Categoria</title>
+    <title>Adicionar Categoria  - PhotoPulse.inc</title>
     <style>
         body{
             background-color: #0c0c0c;
@@ -93,10 +93,14 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
+            <!-- Formulário para adicionar uma nova categoria -->
             <form th:action="@{/admin/categories/add}" method="post" th:object="${category}">
+
+                <!-- Campo oculto para o ID da categoria -->
                 <input type="hidden" name="id"  th:field="*{id}">
                 <div class="form-group">
                     <label for="name">Nome da Categoria</label>
+                    <!-- Campo de texto para o nome da categoria -->
                     <input type="text" class="form-control" required th:field="*{name}" name="name" id="name"  placeholder="Digite o nome da categoria para adicionar">
 
                 </div>

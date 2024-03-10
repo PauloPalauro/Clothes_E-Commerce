@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
           <link rel="icon" href=../images/logo2.png type="image/x-icon">
-    <title>Adicionar Produtos</title>
+    <title>Adicionar Produtos - PhotoPulse.inc</title>
     <style>
          body{
             background-color: #0c0c0c;
@@ -94,19 +94,20 @@
 </nav>
 <div class="container">
     <h3>Adicionar um novo produto</h3>
+    <!-- Formulário de adição de produtos -->
     <form th:action="@{/admin/products/add}" method="post" th:object="${productDTO}" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm-5">
-
+                <!-- Campo oculto para o ID do produto -->
                 <input type="hidden" name="id" th:field="*{id}">
                 <div class="form-group">
                     <label for="name">Nome</label>
-                    <input type="text" class="form-control" required th:field="*{name}" name="name" id="name"
-                           placeholder="Enter name">
-
+                    <!-- Campo para o nome do produto -->
+                    <input type="text" class="form-control" required th:field="*{name}" name="name" id="name" placeholder="Enter name">
                 </div>
                 <div class="form-group">
                     <label for="category">Selecionar categoria</label>
+                    <!-- Dropdown para selecionar a categoria do produto -->
                     <select class="form-control" th:field="*{categoryId}" id="category" name="category">
                         <option th:each="category :${categories}"
                                 th:value="${category.id}"
@@ -116,29 +117,36 @@
                 </div>
                 <div class="form-group">
                     <label for="price">Preço</label>
+                    <!-- Campo para o preço do produto -->
                     <input type="number" class="form-control" required th:field="*{price}" name="price" id="price"
                            placeholder="Price">
                 </div>
                 <div class="form-group">
+                    <!-- Campo para o peso do produto -->
                     <label for="weight">Peso em gramas</label>
                     <input type="number" class="form-control" required th:field="*{weight}" name="weight" id="weight"
                            placeholder="Weight">
                 </div>
                 <div class="form-group">
                     <label for="description">Descrição do Produto</label>
+                    <!-- Textarea para a descrição do produto -->
                     <textarea class="form-control" rows="5" th:field="*{description}" name="description" id="description"></textarea>
                 </div>
             </div>
             <div class="col-sm-5">
                 <p>Imagem do Produto</p>
                 <div class="custom-file">
+                    <!-- Input para carregar a imagem do produto -->
                     <input type="file"  class="custom-file-input" name="productImage" accept="image/jpeg, image/png"  id="productImage"/>
                     <label class="custom-file-label" for="productImage">Escolha um arquivo</label>
                 </div>
                 <div class="form-group">
+                    <!-- Preview da imagem do produto -->
                     <img src="#" id="imgPreview" height="100px" width="100px" th:src="@{${'/productImages/' + productDTO.imageName}}" style="margin-top: 20px" alt=" ">
                 </div>
+                <!-- Campo oculto para o nome da imagem do produto -->
                 <input type="hidden" name="imgName" th:value="${productDTO.imageName}">
+                <!-- Botão de envio do formulário -->
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </div>
@@ -155,6 +163,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+
+<!-- Script para visualizar a imagem selecionada e mostrar o nome do arquivo selecionado -->       
 <script>
     function readURL(input){
         if(input.files && input.files[0]){

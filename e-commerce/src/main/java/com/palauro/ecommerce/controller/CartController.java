@@ -17,15 +17,15 @@ public class CartController {
 
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable int id){
-        GlobalData.cart.add(productService.getProductById(id).get());
+        GlobalData.cart.add(productService.getProductById(id).get()); //Adiciona o produto ao carrinho de compras.
         return "redirect:/shop";
     }
 
     @GetMapping("/cart")
     public String cartGet(Model model){
         model.addAttribute("cartCount", GlobalData.cart.size());
-        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice).sum());
-        model.addAttribute("cart", GlobalData.cart);
+        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice).sum());//Adiciona um atributo chamado "total" ao objeto Model. O valor deste atributo é a soma dos preços de todos os produtos no carrinho.
+        model.addAttribute("cart", GlobalData.cart); //O valor deste atributo é a lista cart armazenada em GlobalData
         return "cart";
     }
 
@@ -45,4 +45,11 @@ public class CartController {
     public String warning() {
         return "warning";
     }
+
+    @GetMapping("/orderPlaced")
+    public String order() {
+        return "orderPlaced";
+    }
+
+
 }

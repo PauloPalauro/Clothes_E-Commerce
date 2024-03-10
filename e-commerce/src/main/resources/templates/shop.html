@@ -104,25 +104,31 @@
     <div class="row">
         <div class="col-sm-3">
             <h4>Categorias</h4>
+            <!-- Lista de categorias -->
             <ul class="list-group">
                 <a th:href="@{/shop}"><li class="list-group-item">Todos os produtos</li></a>
+                 <!-- Iteração sobre as categorias -->
                 <a href="" th:each="category, iStat : ${categories}"
                    th:href="@{/shop/category/{id}(id=${category.id})}"><li
-                               class="list-group-item" th:text="${category.name}"></li></a>
-
+                    class="list-group-item" th:text="${category.name}"></li></a>
             </ul>
         </div>
         <div class="col-sm-9">
             <div class="card" style="margin-top: 20px" th:each="product : ${products}">
                 <div class="row no-gutters">
                     <div class="col-sm-5 d-flex justify-content-center">
+                        <!-- Pré-visualização da imagem do produto -->
                         <img class="" height="150px" width="150px" th:src="@{${'/productImages/' + product.imageName}}" th:alt="${product.name}">
                     </div>
                     <div class="col-sm-7 d-flex justify-content-center">
                         <div class="card-body">
+                            <!-- Título do produto -->
                             <h5 class="card-title" th:text="${product.name}"></h5>
+                            <!-- Preço do produto -->
                             <h4>R$ <span th:text="${product.price}"></span></h4>
+                            <!-- Descrição do produto -->
                             <p th:text="${product.description}" >Suresh Dasari is a founder and technical lead developer in tutlane.</p>
+                            <!-- Link para visualizar o produto -->
                             <a href="#" th:href="@{/shop/viewproduct/{id}(id=${product.id})}" class="btn btn-primary">Ver produto</a>
                         </div>
                     </div>

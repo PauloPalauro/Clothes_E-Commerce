@@ -110,6 +110,7 @@
                 <span th:text="${product.weight}"></span> gramas.
             </h5>
             <p th:text="${product.description}"></p>
+            <!-- Botão para adicionar o produto ao carrinho -->
             <a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Adicionar ao carrinho</a>
         </div>
     </div>

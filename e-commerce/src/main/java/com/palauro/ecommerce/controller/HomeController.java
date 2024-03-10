@@ -19,9 +19,10 @@ public class HomeController {
     @Autowired
     ProductService productService;
 
+
     @GetMapping({ "/", "/home" })
     public String home(Model model) {
-        model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("cartCount", GlobalData.cart.size()); //O valor deste atributo é o tamanho da lista cart armazenada em GlobalData. Será usado para exibir a quantidade de itens no carrinho na página inicial.
         return "index";
     }
 
@@ -30,7 +31,6 @@ public class HomeController {
         model.addAttribute("categories", categoryService.getAllCategory());
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("cartCount", GlobalData.cart.size());
-
         return "shop";
     }
 

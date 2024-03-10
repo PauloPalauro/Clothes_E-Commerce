@@ -1,5 +1,6 @@
 package com.palauro.ecommerce.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,11 @@ public class LoginController{
         roles.add(roleRepository.findById(2).get()); //Uma role é adicionada à lista de roles do usuário.
         user.setRoles(roles); //Define as roles do usuário no objeto user
         userRepository.save(user); //Salva o novo usuário no banco de dados.
-        request.login(user.getEmail(), password); // Autentica o usuário recém-registrado. Isso é feito chamando o método login() do objeto request, passando o email e a senha do usuário como parâmetros.
-        return "redirect:/index";
+        Principal principal = request.getUserPrincipal(); // Verifica se o usuário já está autenticado
+        if (principal == null) {
+            request.login(user.getEmail(), password);  // Não está autenticado, então podemos tentar autenticar o usuário
+        }
+        return "index";
     }
 
 }

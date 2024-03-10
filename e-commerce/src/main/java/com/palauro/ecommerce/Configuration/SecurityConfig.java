@@ -25,7 +25,8 @@ public class SecurityConfig {
         http
                //Este trecho define as regras de autorização para as requisições HTTP.
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/", "/shop/**", "/register", "/h2-console/**", "/images/**","/productImages/**", "/css/**").permitAll() //Ele permite que determinados URLs sejam acessados por qualquer pessoa (permitAll())
+                        .requestMatchers("/", "/shop/**", "/register", "/h2-console/**", "/images/**","/productImages/**", "/css/**")
+                        .permitAll() //Ele permite que determinados URLs sejam acessados por qualquer pessoa (permitAll())
                         .requestMatchers("/admin/**").hasRole("ADMIN") //Enquanto outros URLs só podem ser acessados por usuários com o papel (role) "ADMIN". 
                         .anyRequest().authenticated()) //Qualquer outra requisição deve ser autenticada.
 

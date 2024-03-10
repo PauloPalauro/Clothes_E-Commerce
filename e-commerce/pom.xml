@@ -19,43 +19,51 @@
 	</properties>
 
 	<dependencies>
+	<!-- spring-boot-starter-data-jpa: Inicia o suporte ao JPA (Java Persistence API) para acesso a banco de dados. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+	<!-- spring-boot-starter-oauth2-client: Fornece suporte para autenticação via OAuth2. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 
+	<!-- spring-boot-starter-security: Inicia o suporte à segurança da aplicação com o Spring Security. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+	<!-- spring-boot-starter-thymeleaf: Fornece suporte para o Thymeleaf, um mecanismo de template para construção de interfaces web. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+	<!-- spring-boot-starter-web: Inicia o suporte ao desenvolvimento de aplicações web com Spring MVC. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+	<!-- h2: Adiciona a dependência do banco de dados H2 para uso em ambiente de desenvolvimento. -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
+	<!-- thymeleaf-extras-springsecurity6: Fornece extensões do Thymeleaf para integração com o Spring Security 6. -->
 		 <dependency>
        		 <groupId>org.thymeleaf.extras</groupId>
         	 <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         	 <version>3.1.1.RELEASE</version>
     	</dependency>
 
+	<!-- spring-boot-devtools: Fornece ferramentas de desenvolvimento para o Spring Boot, como reinicialização automática da aplicação. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -63,12 +71,14 @@
 			<optional>true</optional>
 		</dependency>
 
+	<!-- lombok: Biblioteca que simplifica o desenvolvimento em Java, reduzindo a verbosidade do código com anotações para geração automática de getters, setters, construtores, etc. -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
 
+	<!-- spring-boot-starter-test e spring-security-test: Dependências para testes unitários e de integração com o Spring Boot e Spring Security. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -86,18 +96,20 @@
     		<artifactId>spring-security-config</artifactId>
 		</dependency>
 
-
+	<!-- spring-boot-starter-validation: Adiciona suporte à validação de dados. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+	<!-- spring-boot-configuration-processor: Processa as configurações de propriedades definidas nas classes de configuração do Spring Boot. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
 
+	<!-- miniapp-sdk-client e paytm-checksum: Dependências específicas para integração com a plataforma de pagamentos Paytm. -->
 		<dependency>
 			<groupId>com.paytm</groupId>
 			<artifactId>miniapp-sdk-client</artifactId>
@@ -111,31 +123,37 @@
 		</dependency>
 	</dependencies>
 
+
+	<!-- Os repositórios definidos no arquivo pom.xml são locais onde o Maven procura por dependências de artefatos (bibliotecas, frameworks, etc.) que não estão disponíveis nos repositórios padrão do Maven Central. -->
 	<repositories>
 		<repository>
-
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
+
+			<!-- libs-snapshot: Este repositório é configurado para lidar com artefatos de versão snapshot. Snapshots são versões em desenvolvimento, geralmente disponíveis para testes e feedback. -->
 			<id>snapshots</id>
 			<name>libs-snapshot</name>
 			<url>https://artifactorypg.paytm.in/artifactory/libs-snapshot</url>
 		</repository>
 
+		<!-- my-repo1: Este repositório é configurado para lidar com artefatos de versão release. Releases são versões estáveis e geralmente recomendadas para uso em produção. -->
 		<repository>
 			<id>my-repo1</id>
 			<url> http://artifactorypg.paytm.in/artifactory/libs-release </url>
 		</repository>
 	</repositories>
 
+   <!-- Esta tag indica o início da seção de configuração de construção do Maven. -->
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
+		<plugins> <!-- Esta tag contém a lista de plugins Maven que serão utilizados durante o processo de construção. -->
+			<plugin> 
+				<groupId>org.springframework.boot</groupId> <!-- Essas tags identificam o plugin Maven que está sendo configurado. No caso, o plugin spring-boot-maven-plugin é fornecido pelo grupo org.springframework.boot e tem o artefato spring-boot-maven-plugin. -->
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
+
+				<configuration> <!--  Esta tag define as configurações específicas do plugin. -->
+					<excludes> <!-- Esta tag lista os artefatos que serão excluídos do empacotamento quando o aplicativo Spring Boot for construído. No seu caso, os artefatos do lombok e spring-boot-configuration-processor serão excluídos. Esses artefatos geralmente não são necessários no JAR final do aplicativo Spring Boot, pois são usados apenas durante o desenvolvimento. -->	
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
